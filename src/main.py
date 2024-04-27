@@ -1,9 +1,7 @@
 from fastapi import FastAPI
-from api import country
-from dotenv import dotenv_values
+from .api import country
 
 
 app = FastAPI()
-config = dotenv_values(".env")
 # Include the routers
 app.include_router(country.router)

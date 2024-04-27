@@ -1,7 +1,7 @@
 import boto3
 from dotenv import dotenv_values
 from botocore.exceptions import ClientError
-from main import config
+from ..config import config
 
 
 

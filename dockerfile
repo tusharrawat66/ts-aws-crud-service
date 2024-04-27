@@ -11,7 +11,7 @@ COPY src /app
 
 # Install your Python dependencies and create the virtual environment
 COPY requirements.txt /app/requirements.txt
-RUN /app/myenv/bin/pip install -r /app/requirements.txt
+RUN pip install -r requirements.txt
 
 # Expose the port on which the FastAPI app will run
 EXPOSE 8000
