@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .api import country
+from src.api import country
 
 
 app = FastAPI()

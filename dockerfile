@@ -5,16 +5,14 @@ FROM python:3.11
 WORKDIR /app
 
 # Copy the application code into the container
-COPY src /app
+COPY . /app
 
 # Include the "static" directory
 
-# Install your Python dependencies and create the virtual environment
-COPY requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt
 
 # Expose the port on which the FastAPI app will run
 EXPOSE 8000
 
 # Command to run when the container starts
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

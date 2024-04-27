@@ -7,7 +7,7 @@ from ..config import config
 
 dynamodb = boto3.resource(
     'dynamodb', 
-    region_name=config.get("region_name"),
+    region_name=config.get("AWS_DEFAULT_REGION"),
     aws_access_key_id=config.get('AWS_ACCESS_KEY_ID'),
     aws_secret_access_key=config.get('AWS_SECRET_ACCESS_KEY')
 )
