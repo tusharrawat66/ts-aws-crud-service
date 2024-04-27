@@ -1,4 +1,4 @@
-from mongoengine import connect, Document, StringField, FloatField
+from mongoengine import (Document, StringField, FloatField)
 
 
 
