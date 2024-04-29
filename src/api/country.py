@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
-from ..services.dynamoDb import dynamodb_handler
-from ..services.utils import schema_dump
-from ..schema.Countryschema import CountryCreate,CountryRead,CountryUpdate
-from ..config import config
+from src.services.dynamoDb import dynamodb_handler
+from src.services.utils import schema_dump
+from src.schema.Countryschema import CountryCreate,CountryRead,CountryUpdate
+from src.config import config
 
 
 

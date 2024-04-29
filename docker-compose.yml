@@ -8,23 +8,32 @@ services:
     image: flask_micro:latest
     ports:
       - "8000:8000"
+    volumes:
+      - /Users/tusharrawat/.aws/credentials:/home/app/.aws/credentials:ro
     depends_on:
-      - aws_services
+      - localstack
+      - aws-cli
     networks:
       - my_network
 
-
-  aws_services:
+  localstack:
     image: localstack/localstack
     environment:
-      - SERVICES=dynamodb,lambda  # Include the services you need, separated by commas
-      - DEFAULT_REGION=us-east-1
+      - SERVICES=dynamodb,lambda
     ports:
-      - "4566:4566"  # DynamoDB port
-      - "4574:4574"  # Lambda port
+      - "4566:4566"
+      - "4574:4574"
     networks:
       - my_network
 
+  aws-cli:
+    image: amazon/aws-cli:latest
+    entrypoint: /bin/bash
+    command: -c "while true; do sleep 1; done"
+    volumes:
+      - ~/.aws:/root/.aws
+    networks:
+      - my_network
 
   keycloak:
     image: sleighzy/keycloak
@@ -36,11 +45,6 @@ services:
     networks:
       - my_network
 
-
 networks:
   my_network:
     driver: bridge
-
-
-
-
