@@ -30,19 +30,34 @@ def get_countries():
 def create_countries(country: CountryCreate):
     table = dynamodb_handler(TABLE_NAME)
     new_item = {
+        "id": country.id,
         "country": country.country,
         "capital": country.capital,
         "continent": country.continent,
         "population": country.population,
         "code": country.code
     }
-    response = table.put_item(Item=new_item)
-    return schema_dump(CountryRead(**new_item))
+
+    required_keys = ["country", "capital", "continent", "population", "code"]
+    missing_keys = [key for key in required_keys if key not in new_item]
+    print(f"NEW ITEM: {new_item}")
+    if missing_keys:
+        error_message = f"Missing required keys: {', '.join(missing_keys)}"
+        raise HTTPException(status_code=400, detail=error_message)
+
+    try:
+        response = table.put_item(Item=new_item)
+        print(f"RESPONSE:  {response}")
+        return schema_dump(CountryRead(**new_item))
+    except Exception as e:
+        print(f"Error putting item into DynamoDB: {e}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+    
 
 
 
-@router.patch("/update/{id}", response_model=CountryCreate, status_code=201)
-def update_countries(id: str, country: CountryUpdate):
+@router.patch("/update/{id}", response_model=CountryRead, status_code=201)
+def update_countries(id, country: CountryUpdate):
     table = dynamodb_handler(TABLE_NAME)
     key = {"id": id}
     # Implement your item creation logic here
